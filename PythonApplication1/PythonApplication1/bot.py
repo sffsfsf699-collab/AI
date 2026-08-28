@@ -1,4 +1,4 @@
-```python
+
 import discord
 import requests
 import os
@@ -472,4 +472,4 @@ async def avatar(
 # =========================
 
 client.run(DISCORD_TOKEN)
-```
+
