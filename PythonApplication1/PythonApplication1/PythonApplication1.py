@@ -1,16 +1,15 @@
-
-
+```python
 import discord
 import requests
+import os
 from discord import app_commands
 
 # =========================
 # SETTINGS
 # =========================
 
-DISCORD_TOKEN = "M"
-
-API_KEY = "A"
+DISCORD_TOKEN = os.getenv("DISCORD_TOKEN")
+API_KEY = os.getenv("API_KEY")
 
 MODEL = "gemini-3.5-flash-lite"
 
@@ -18,6 +17,17 @@ GEMINI_URL = (
     f"https://generativelanguage.googleapis.com/"
     f"v1beta/models/{MODEL}:generateContent"
 )
+
+
+# =========================
+# CHECK SETTINGS
+# =========================
+
+if not DISCORD_TOKEN:
+    raise RuntimeError("DISCORD_TOKEN environment variable is missing!")
+
+if not API_KEY:
+    raise RuntimeError("API_KEY environment variable is missing!")
 
 
 # =========================
@@ -224,12 +234,13 @@ async def dm(
     message: str
 ):
 
-    # Don't allow the app to DM itself
     if user.id == client.user.id:
+
         await interaction.response.send_message(
             "I can't DM myself g.",
             ephemeral=True
         )
+
         return
 
     try:
@@ -461,3 +472,4 @@ async def avatar(
 # =========================
 
 client.run(DISCORD_TOKEN)
+```
